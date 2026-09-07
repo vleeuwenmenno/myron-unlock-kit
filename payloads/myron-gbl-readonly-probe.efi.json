@@ -1,0 +1,14 @@
+{
+  "purpose": "read-only EFI loader probe; READ_CONFIG, print success, return; no WRITE_CONFIG",
+  "input_sha256": "88918dd212fefe9d51c584513cbb7babebf395879d9edc2a02acd4246b5bcf5d",
+  "output_sha256": "08ad10ab574fe183f5d7f764ad11879b436191ce5e8d3710e6de415dd12c00eb",
+  "size": 40960,
+  "patch_rva": "0x1394",
+  "patch_file_offset": "0x1394",
+  "original_bytes": "20008052",
+  "replacement_bytes": "16000014",
+  "message_rva": "0x5cb0",
+  "message_file_offset": "0x5cb0",
+  "probe_message": "VbRwStateApp: READ-ONLY PROBE success; no write.\n",
+  "changed_byte_count": 42
+}
