@@ -1,5 +1,19 @@
 # Unlock success evidence — checked 2026-09-07
 
+> **Disclaimer — research use only; use at your own risk.** This independent
+> project is not affiliated with, endorsed by, or sponsored by Xiaomi, Redmi,
+> or POCO. These materials are intended for research and educational purposes
+> only, on devices you own or are explicitly authorized to test. Using the
+> tools or following the procedures can permanently brick your device, erase
+> or corrupt all data, weaken security, and cause loss of functionality or
+> access to updates and services. Recovery is not guaranteed.
+> The author, maintainers, and contributors provide everything **as is, without
+> warranty**, and accept no responsibility or liability for damage, data loss,
+> costs, or other consequences, to the fullest extent permitted by applicable
+> law. You are responsible for your actions and backups. Past success does not
+> guarantee safety or compatibility. Read the [full disclaimer](../DISCLAIMER.md)
+> before using any material in this project.
+
 Target: POCO F8 Ultra myron EEA, `OS3.0.301.0.WPMEUXM.C07`, April 1 security
 patch, kernel `6.12.23-android16-5-g5a0e85dd9db0-ab14499855-4k`.
 

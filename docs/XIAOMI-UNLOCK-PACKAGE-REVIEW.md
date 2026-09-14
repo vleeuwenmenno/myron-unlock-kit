@@ -1,5 +1,19 @@
 # Xiaomi8Elite5seriesBLunlock.zip — offline inspection
 
+> **Disclaimer — research use only; use at your own risk.** This independent
+> project is not affiliated with, endorsed by, or sponsored by Xiaomi, Redmi,
+> or POCO. These materials are intended for research and educational purposes
+> only, on devices you own or are explicitly authorized to test. Using the
+> tools or following the procedures can permanently brick your device, erase
+> or corrupt all data, weaken security, and cause loss of functionality or
+> access to updates and services. Recovery is not guaranteed.
+> The author, maintainers, and contributors provide everything **as is, without
+> warranty**, and accept no responsibility or liability for damage, data loss,
+> costs, or other consequences, to the fullest extent permitted by applicable
+> law. You are responsible for your actions and backups. Past success does not
+> guarantee safety or compatibility. Read the [full disclaimer](../DISCLAIMER.md)
+> before using any material in this project.
+
 Date: 2026-09-07. User supplied archive, associated with the download linked by
 the [DroidWin guide](https://droidwin.com/how-to-unlock-bootloader-on-poco-f8-ultra/).
 The association is not independent authentication of the downloaded bytes.
