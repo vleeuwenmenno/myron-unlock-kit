@@ -18,6 +18,9 @@ This kit records the path that unlocked one POCO F8 Ultra EEA on 2026-09-08
 without replacing either ABL partition. It is intentionally pinned to the tested
 firmware and kernel.
 
+None of this would exist without the people who found, ported and published the
+underlying work. See [Credits and acknowledgements](#credits-and-acknowledgements).
+
 ## Verified target
 
 - Product: POCO F8 Ultra / Redmi K90 Pro Max family
@@ -298,12 +301,83 @@ adb reboot bootloader
 
 Expected values are `_b`, `0`, `orange`, and `OKAYyes`.
 
+## 11. Optional: install the reviewed Myron TWRP build
+
+The unlocked phone can use the reviewed TWRP 1.4 Myron recovery as a staging
+and fallback environment for later postmarketOS work. Standard Fastboot on the
+tested phone rejected the 100 MiB recovery download before any write, so the
+tested procedure uses the exact-target temporary-root shell and verifies the
+entire partition after writing it.
+
+See [`docs/TWRP-RECOVERY.md`](docs/TWRP-RECOVERY.md) for image provenance,
+staging commands, installation, validation, and stock-recovery restoration.
+
 ## Relocking
 
 Do not relock while any custom boot, vbmeta, recovery, kernel, or system image is
 installed. Restore a complete matching stock firmware first and verify that
 `efisp` is empty. Relocking normally wipes userdata and can hard-brick a device
 whose verified partitions do not match the trusted stock chain.
+
+## Credits and acknowledgements
+
+This kit is a small pinned procedure standing on other people's work. The names
+below are the ones we could attribute; where an author is unknown we say so
+rather than guess. Thank you to all of them.
+
+### Code and artifacts redistributed in this kit
+
+| Who | What we use | Where |
+|---|---|---|
+| **JoinChang** — [github.com/JoinChang/ghostlock-oneplus](https://github.com/JoinChang/ghostlock-oneplus) | Maintainer of the upstream **GhostLock** exploit for CVE-2026-43499. `root-exploit/` is a restricted single-target fork of that project: the exploit chain, device offset tables and tooling are theirs, and this kit only narrows and drives it. That repository publishes no author byline, so this is the attributable source rather than a confirmed personal credit; the original researcher of the technique is likewise unnamed there. | `root-exploit/` |
+| **Lukas Maar**, with **Jonas Juffinger**, **Thomas Steinbauer**, **Daniel Gruss** and **Stefan Mangard** (Graz University of Technology) | Authors of **KernelSnitch** — "KernelSnitch: Side Channel-Attacks on Kernel Data Structures", NDSS 2025. The vendored heap/KASLR leak implementation comes from that research: [isec-tugraz/KernelSnitch](https://github.com/isec-tugraz/KernelSnitch), [lukasmaar/kernelsnitch](https://github.com/lukasmaar/kernelsnitch). | `root-exploit/src/core/kernelsnitch/` |
+| **Bob Jenkins** — [burtleburtle.net/bob/hash](https://burtleburtle.net/bob/hash/) | Author of the `lookup3` / `jhash` hash functions (public domain), used by the futex-hash collision search. | `root-exploit/src/core/kernelsnitch/futex_hash.h` |
+| **Jozsef Kadlecsik** | Author of the Linux-kernel `jhash` adaptation whose header and credits are carried verbatim in the same file. | `root-exploit/src/core/kernelsnitch/futex_hash.h` |
+| **Unknown author** — redistributed from `Xiaomi8Elite5seriesBLunlock.zip`, linked by the [DroidWin guide](https://droidwin.com/how-to-unlock-bootloader-on-poco-f8-ultra/) | The `VbRwStateApp` EFI loader (**`gbl_efi_unlock.efi`**). No author or license is stated in that archive or in the July XDA package that ships the same bytes, so we cannot name anyone here. `payloads/myron-gbl-readonly-probe.efi` is our own 42-byte patch of it. | `payloads/Unlocking-SM8850.efi` |
+
+### Tools and prior work used or depended on
+
+| Who | What we use |
+|---|---|
+| **MissMyTime** — [twrp_device_sm8850](https://github.com/MissMyTime/twrp_device_sm8850) | The upstream **TWRP Myron device tree** and release 1.4 recovery image that the optional recovery procedure installs. |
+| **byemaxx** — [ghostlock-anchor](https://github.com/byemaxx/ghostlock-anchor) | The GhostLock **Anchor** boot-time launcher app. |
+| **tiann** and the KernelSU project — [tiann/KernelSU](https://github.com/tiann/KernelSU) | **KernelSU** and `ksud`, the root-solution stack documented upstream. This restricted build contains no KernelSU stage. |
+| **ReSukiSU** maintainers — [ReSukiSU/ReSukiSU](https://github.com/ReSukiSU/ReSukiSU), **JoinChang**'s [fork](https://github.com/JoinChang/ReSukiSU), and **cctv18**'s [ReSukiSU CI](https://github.com/cctv18/ReSukiSU_CI) | The APKs and CI builds that bundle `libksud.so`. |
+| **jason5545** — [ghostlock-myron-tw](https://github.com/jason5545/ghostlock-myron-tw) | The earlier **Myron port** of GhostLock. Its published offsets and the [accompanying write-up](https://b-log.to/tech-analysis/myron-taiwan-kernel-ghostlock-offsets/) were the starting point for targeting this device, even though they provided no end-to-end successful unlock log for our build. |
+
+### Evidence and reviews from the community
+
+Our prior-art search rests on public reports we did not produce: the
+[XDA myron unlock thread](https://xdaforums.com/t/free-xiaomi-17-series-redmi-k90-pro-max-bootloader-unlock-no-disassembly.4781471/)
+and its contributors (including **sundave72**, **xfighter11**, **Shira129** and
+**wileecoyote7**), the [tutorial thread](https://xdaforums.com/t/pocof8ultra-redmi-k90-pro-max-unlock-bootloader-tutorial.4781632)
+by **Stuart Cui**, and the anonymous July package author whose archive we
+reviewed offline. The same search covered
+[Linuxoid-cn/Mi8E5-Unlocker-by-CVE-2026-43499](https://github.com/Linuxoid-cn/Mi8E5-Unlocker-by-CVE-2026-43499)
+and, for recovery leads, [bkerler/edl](https://github.com/bkerler/edl) and the
+[GSM-Forum repair thread](https://forum.gsmhosting.com/vbb/f1156/flash64-post-here-all-devices-sucessfully-repaired-3366904-print/index141.html).
+None of these projects, authors or forum members reviewed, endorsed or tested
+this kit, and listing them here is thanks and provenance only — not a claim that
+they support it.
+
+### Something missing? Please tell us
+
+This list is as complete as we could make it, but it is probably still incomplete.
+Attribution for work like this is scattered across archived ZIPs, anonymous
+uploads, posts that have since been edited, and code that never carried a header —
+and vendored code frequently loses its credits along the way, which is exactly what
+had happened here before this section existed.
+
+**If your work, name, handle or project appears in this kit and is missing, wrong,
+or described badly, please say so and I will add or correct it.** Open an issue at
+[github.com/vleeuwenmenno/myron-unlock-kit/issues](https://github.com/vleeuwenmenno/myron-unlock-kit/issues),
+or reach the maintainer however you prefer.
+
+Corrections are welcome even if you want the change to go the other way: if you
+would rather not be credited here, or want a link, spelling or description fixed,
+say so and it will be done. Thanking people properly matters more than the list
+looking tidy, and a request to be removed from it will be honoured as readily as a
+request to be added.
 
 ## Contents
 
@@ -320,4 +394,6 @@ whose verified partitions do not match the trusted stock chain.
   ABL payloads were excluded.
 - `docs/RECOVERY-PLAN.md` and `docs/HARD-BRICK-RECOVERY-OPTIONS.md`: recovery
   references to read before modifying boot partitions.
+- `docs/TWRP-RECOVERY.md`: reviewed Myron TWRP installation and exact stock
+  recovery restoration.
 - `SHA256SUMS`: integrity manifest for every other file in this kit.
